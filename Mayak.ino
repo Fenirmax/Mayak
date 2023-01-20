@@ -5,7 +5,8 @@
 
 RF24 radio(9, 8); // CE, CSN
 const byte addresses[][10] = {"ADDRESS01","ADDRESS02"};
-const genon[] = "0", mayakon[] = "1"
+const char genon[] = "0";
+const char mayakon[] = "1";
 
 void setup() {
   Serial.begin(9600);  
@@ -18,16 +19,14 @@ void setup() {
 
 void loop() {
   delay(10000);
-
   radio.startListening();
   if (radio.available()) {
-    delay(60000)
+    radio.stopListening();
+  radio.write(&genon, sizeof(genon));
   }
   else {
   radio.stopListening();
   radio.write(&mayakon, sizeof(mayakon));
-
   }
-  
-
+  delay(60000);
 }
